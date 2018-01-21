@@ -38,8 +38,8 @@ I strongly recommend running this repo locally and playing with it for a bit bef
 
 Note: Init at the end of the body-tag, directly after Unslider.
 
-PARAMETERS  |
-------------- |
+| PARAMETERS  |  |
+| ------------- | ------------- |
 images:  | A one- or multi-dimensional array containing the URLs to the images that should be displayed - should be sorted in a descending manner (ie. biggest res to lowest res)
 description:  | An array containing Strings that are used in the title-tag of each image
 alt:  | An array containing Strings that are used in the alt-tag of each image (including Thumbnails)
