@@ -4,10 +4,9 @@ The `unslider-lazyload` plugin for `unslider.js` extends your slider with lazylo
 
 This plugin has been thoroughly tested in a production environment for quite some time now, making it fit for open source release and peace-of-mind usage.
 
-The Links to the demo pages will follow shortly.
-##### [Demo °1 - Multidimensional Array with Sourcesets](#)
-##### [Demo °2 - Onedimensional Array](#)
-##### [Demo °3 - Multiple Sliders together](#)
+##### [Demo °1 - Multidimensional Array with Sourcesets](https://jsfiddle.net/jarbely/ofbLm6cq/)
+##### [Demo °2 - Onedimensional Array (soon)](#)
+##### [Demo °3 - Multiple Sliders together (soon)](#)
 
 :part_alternation_mark:
 
