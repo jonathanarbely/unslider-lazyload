@@ -1,6 +1,6 @@
 # Unslider - Lazyloading & Thumbnails Plugin
 
-[![npm version](https://badge.fury.io/js/unslider-lazyload.svg)](https://badge.fury.io/js/unslider-lazyload)
+[![npm version](https://badge.fury.io/js/unslider-lazyload.svg)](https://badge.fury.io/js/unslider-lazyload) [![](https://data.jsdelivr.com/v1/package/npm/unslider-lazyload/badge)](https://www.jsdelivr.com/package/npm/unslider-lazyload)
 
 The `unslider-lazyload` plugin for `unslider.js` extends your slider with lazyloading functionality, enables sourceset usage and introduces Thumbnails.
 
