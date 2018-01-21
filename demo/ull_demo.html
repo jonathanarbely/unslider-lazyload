@@ -1,0 +1,81 @@
+
+<!-- ull_demo.pug-->
+<!-- Demo °1 - Multidimensional Array with Sourcesets--><!DOCTYPE html>
+<html lang="EN">
+  <!-- HEAD-->
+  <head>
+    <!-- META-->
+    <title>Unslider Lazyload Demo - Sourceset</title>
+    <meta charset="utf-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <!-- CSS-->
+    <link rel="stylesheet" media="all" href="/static/css/styles.css">
+    <!-- JS-->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/plugins/jquery-swipe/jquery.event.move.min.js"></script>
+    <script src="/static/plugins/jquery-swipe/jquery.event.swipe.min.js"></script>
+    <script src="/static/plugins/unslider/unslider.js"></script>
+    <script src="/static/plugins/unslider-lazyload/unslider-lazyload.js"></script>
+    <script>
+      // ARRAYS FOR THE DEMO GALLERY
+      var images = [
+         ['755',
+             ['https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482322-1320926232', 'https://images.interhome.com/ES8354.750.1/partner-medium/60732-1-482347-1320926168', 'https://images.interhome.com/ES8354.750.1/partner-medium/60732-1-482337-1320926200', 'https://images.interhome.com/ES8354.750.1/partner-medium/60732-1-482358-1320926172', 'https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482328-1395646557', 'https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482326-1320926218', 'https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482324-1395646564', 'https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482320-1395646571', 'https://images.interhome.com/ES8354.750.1/partner-medium/60731-1-482315-1320926239', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753511-1470393602', 'https://images.interhome.com/CH7428.5.1/large/308465-1-1753505-1470393729', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1311214-1457078790', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1311216-1457078788', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753515-1470393655', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753518-1470393644', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753517-1470393638', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1311220-1457078786', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753519-1470393632', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1753513-1470393623', 'https://images.interhome.com/CH7428.5.1/large/308466-1-1311215-1457078775']
+         ],
+         ['420',
+              ['https://images.interhome.com/ES8354.750.1/420x315/60731-1-482322-1320926232', 'https://images.interhome.com/ES8354.750.1/420x315/60732-1-482347-1320926168', 'https://images.interhome.com/ES8354.750.1/420x315/60732-1-482337-1320926200', 'https://images.interhome.com/ES8354.750.1/420x315/60732-1-482358-1320926172', 'https://images.interhome.com/ES8354.750.1/420x315/60731-1-482328-1395646557', 'https://images.interhome.com/ES8354.750.1/420x315/60731-1-482326-1320926218', 'https://images.interhome.com/ES8354.750.1/420x315/60731-1-482324-1395646564', 'https://images.interhome.com/ES8354.750.1/420x315/60731-1-482320-1395646571', 'https://images.interhome.com/ES8354.750.1/420x315/60731-1-482315-1320926239', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753511-1470393602', 'https://images.interhome.com/CH7428.5.1/420x315/308465-1-1753505-1470393729', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1311214-1457078790', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1311216-1457078788', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753515-1470393655', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753518-1470393644', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753517-1470393638', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1311220-1457078786', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753519-1470393632', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1753513-1470393623', 'https://images.interhome.com/CH7428.5.1/420x315/308466-1-1311215-1457078775']
+         ],
+         ['340',
+              ['https://images.interhome.com/ES8354.750.1/340x225/60731-1-482322-1320926232', 'https://images.interhome.com/ES8354.750.1/340x225/60732-1-482347-1320926168', 'https://images.interhome.com/ES8354.750.1/340x225/60732-1-482337-1320926200', 'https://images.interhome.com/ES8354.750.1/340x225/60732-1-482358-1320926172', 'https://images.interhome.com/ES8354.750.1/340x225/60731-1-482328-1395646557', 'https://images.interhome.com/ES8354.750.1/340x225/60731-1-482326-1320926218', 'https://images.interhome.com/ES8354.750.1/340x225/60731-1-482324-1395646564', 'https://images.interhome.com/ES8354.750.1/340x225/60731-1-482320-1395646571', 'https://images.interhome.com/ES8354.750.1/340x225/60731-1-482315-1320926239', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753511-1470393602', 'https://images.interhome.com/CH7428.5.1/340x225/308465-1-1753505-1470393729', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1311214-1457078790', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1311216-1457078788', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753515-1470393655', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753518-1470393644', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753517-1470393638', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1311220-1457078786', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753519-1470393632', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1753513-1470393623', 'https://images.interhome.com/CH7428.5.1/340x225/308466-1-1311215-1457078775']
+         ]
+       ],
+      imagesThumbs = ['https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482322-1320926232', 'https://images.interhome.com/ES8354.750.1/partner-small/60732-1-482347-1320926168', 'https://images.interhome.com/ES8354.750.1/partner-small/60732-1-482337-1320926200', 'https://images.interhome.com/ES8354.750.1/partner-small/60732-1-482358-1320926172', 'https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482328-1395646557', 'https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482326-1320926218', 'https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482324-1395646564', 'https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482320-1395646571', 'https://images.interhome.com/ES8354.750.1/partner-small/60731-1-482315-1320926239', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753511-1470393602', 'https://images.interhome.com/CH7428.5.1/small/308465-1-1753505-1470393729', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1311214-1457078790', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1311216-1457078788', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753515-1470393655', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753518-1470393644', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753517-1470393638', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1311220-1457078786', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753519-1470393632', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1753513-1470393623', 'https://images.interhome.com/CH7428.5.1/small/308466-1-1311215-1457078775'],
+      description = ['a', 'descriptive', 'text', 'lorem', 'ipsum', 'freelancing', 'is', 'so', 'much', 'fun!'],
+      alt = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+      
+    </script>
+  </head>
+  <!-- BODY-->
+  <body>
+    <main>
+      <!-- _photogallery.pug-->
+      <section class="c-photogallery">
+        <div class="c-photogallery-wrapper">
+          <!-- ih-detail-photogallery-->
+          <!-- ih-photogallery-->
+          <!-- First Slide-->
+          <div class="c-photogallery-teaser-image">
+            <div class="c-photogallery-teaser-image__link" id="slider1">
+              <ul class="unslider-wrap unslider-carousel">
+                <li></li>
+              </ul>
+            </div>
+          </div>
+          <!-- ih-photogallery-thumbnails-->
+          <ul class="c-photogallery-thumbnails__list pg_thumbs">
+            <!-- Navigation back-->
+            <li class="c-photogallery-thumbnails__item c-photogallery-thumbnails__item--nav pg_prevThumbs previous"><span class="c-photogallery-thumbnails__link c-photogallery-thumbnails__link--previous" title="Previous Image"></span></li>
+            <!-- Thumbnails-->
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <li class="c-photogallery-thumbnails__item"><span class="c-photogallery-thumbnails__link" title="Thumbnail"><img class="c-photogallery-thumbnails__image c-photogallery-thumbnails__image--inactive" src="" alt=""></span></li>
+            <!-- Navigation forward-->
+            <li class="c-photogallery-thumbnails__item c-photogallery-thumbnails__item--nav pg_nextThumbs"><span class="c-photogallery-thumbnails__link c-photogallery-thumbnails__link--next" title="Next Image"></span></li>
+          </ul>
+          <!-- END .c-photogallery-thumbnails-->
+        </div>
+        <!-- END .c-photogallery-->
+      </section>
+      <script>
+        // Init Unslider
+        var slider1 = $('#slider1').unslider({keys:false, speed: 400});
+        // Init Unslider Lazyload-Plugin
+        unsliderlazyload(images, description, alt, 0, slider1, imagesThumbs);
+      </script>
+    </main>
+  </body>
+</html>
