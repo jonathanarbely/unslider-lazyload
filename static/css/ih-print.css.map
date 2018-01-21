@@ -1,0 +1,1 @@
+{"version":3,"sources":["_print.scss"],"names":[],"mappings":"AAQE,kBACC,YAAa,CACb","file":"ih-print.css","sourcesContent":["/* \r\n#############################################\r\nPRINT\r\n#############################################\r\n*/\r\n/* Welcome to Compass. Use this file to define print styles.*/\r\n\r\n\r\n  .ih_c-site-footer {\r\n  \tdisplay: none;\r\n  }"]}
