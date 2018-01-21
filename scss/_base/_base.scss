@@ -1,0 +1,25 @@
+// _base.scss
+
+*, 
+*::after, 
+*::before {
+    box-sizing: border-box;
+}
+
+html, 
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: $font-stack;
+	text-align: left;
+	 -webkit-animation: bugfix infinite 1s;
+}
+body {
+	font-size: 1rem;
+}
+body, 
+form {
+	margin: 0;
+	padding: 0;
+}

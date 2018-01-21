@@ -1,0 +1,13 @@
+// styles.scss
+
+@import "_modules/_variables.scss";
+
+@import "_mixins/_ui_imageslider-arrows.scss";
+
+@import "_base/_base.scss";
+
+@import "_modules/_photogalleries.scss";
+
+@import "../static/plugins/unslider/scss/unslider.scss";
+
+@import "_modules/_unslider-lazyload.scss";

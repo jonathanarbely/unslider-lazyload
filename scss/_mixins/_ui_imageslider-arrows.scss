@@ -1,0 +1,20 @@
+@mixin _ui_imageslider-arrows($size, $arrowsize:"") {
+        margin-top: -39%;
+        background-color: #ffffff;
+        background-image: url('/images/arrowright-long.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 18px;
+        background-size: $arrowsize;
+        border-radius: $border-radius;
+        width: $size;
+        height: $size;
+        transition: 200ms;
+        text-indent: -999em;
+        box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    
+        &.prev {
+            background-image: url('/images/arrowleft-long.svg');
+            display: none;
+        }
+}

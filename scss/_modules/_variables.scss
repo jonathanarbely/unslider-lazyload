@@ -1,0 +1,25 @@
+// _variables.scss
+
+// Typography
+$font-stack : Arial, 'Helvetica Neue', 'Calibri Light', 'Roboto', sans-serif;
+
+// Radius
+$border-radius : 3px;
+
+// Devices / MediaQueries
+$probook: 87.5em; // 1400px
+$ultrabook: 81.25em; // 1300px
+$bignotebook: 77.5em; // 1240px
+$notebook: 75em; // 1200px
+$smallnotebook: 71.25em; // 1140px
+$tablet-landscape: 68.75em; // 1100px
+$protablet-landscape: 62.5em; // 1000px
+$phablet-landscape: 59.375em; // 950px
+$protablet: 53.125em; // 850px
+$tablet: 49em; // 784px
+$phablet: 43.125em; // 690px
+$smartphone-landscape: 36.25em; // 580px
+$smartphone: 29.375em; // 470px
+$smartphone-large: 26.25em; // 420px
+$smartphone-medium: 23.75em; // 380px
+$smartphone-klein: 21.25em; // 340px
