@@ -1,4 +1,4 @@
-/*
+/*!
  *   Unslider Lazyload
  *   version 1.1.0
  *   MIT License
