@@ -1,6 +1,6 @@
 /*
  *   Unslider Lazyload
- *   version 1.0.0
+ *   version 1.1.0
  *   MIT License
  *   by @jonathanarbely (https://bymagellan.co)
  *   https://github.com/jonathanarbely/unslider-lazyload
@@ -165,7 +165,9 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
         swipeDirection = false,
         mobile = false,
         mobileWidth = 1024,
-        ull_break = false;
+        ull_break = false,
+        ull_switchThumbnails = true,
+        ull_thumbnailLength = imagesThumbs.length-1;
     
     // Console log instance (uncomment for debugging)
     /*console.log('------------------------');
@@ -189,13 +191,21 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
     
     removeThumbnails();
 
-    if (!mobile)
+    if (!mobile) {
         var x = 0, // Set counter
             thumbAmount = 7, // Define the amount of thumbnails that should be displayed at a time / a set of Thumbnails
             nextThumbs = $('.pg_nextThumbs:eq('+instance+')'),
             prevThumbs = $('.pg_prevThumbs:eq('+instance+')'),
             currentThumb = 1;
-
+        
+        // Hide thumbnail-arrows when there are less than 7 slides
+        if(imagesThumbs.length <= 7) {
+            nextThumbs.hide();
+            prevThumbs.hide();
+            ull_switchThumbnails = false;
+        }
+    }
+    
     //console.log( 'mobile: ' +mobile );
     //console.log('Next Thumbset: ');
     //console.dir( nextThumbs );
@@ -218,16 +228,29 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
 
     // Previous Slide
     previous.click(function (e) {
-        setImageArray = setImage(i, false); // returns decremented i and lazyLoad true/false
-        i = setImageArray[0];
-        lazyLoad = setImageArray[1];
+        
+        /*console.log(i);
+        console.log($(index).text());
+        console.log(imagesThumbs.length);
+        console.log(currentThumb);
+        console.dir($('.c-photogallery-thumbnails__image--inactive'));
+        console.log($('.c-photogallery-thumbnails__image--inactive').data('thumbid'));*/
+        
+        // Select the last slide when navigating backwards on the first slide (only if ull_switchThumbnails == false)
+        if(i == 0 && $(index).text() == 1 && currentThumb == 1 && !ull_switchThumbnails)
+            $('.c-photogallery-thumbnails__item:eq('+imagesThumbs.length+')').children().children().click();
+        // Display the previous set of thumbnails
+        else {
+            setImageArray = setImage(i, false); // returns decremented i and lazyLoad true/false
+            i = setImageArray[0];
+            lazyLoad = setImageArray[1];
 
-        hidePreviousButton();
+            hidePreviousButton();
 
-        // As this is a clickhandler, false swipeGesture
-        swipeGesture = false;
-
-        //$('.prev:eq('+instance+')').click();
+            // As this is a clickhandler, false swipeGesture
+            swipeGesture = false;
+        }
+        
     });
 
     // Set thumbnails - Call on domready
@@ -355,121 +378,137 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
             }
             
         } else
-            console.log('glitch/loop in unslider lazyload - error prevented');
+            console.log('error: glitch/loop in unslider lazyload - function setThumbs()');
     }
-
+    
     function setImage(i, mode) { // mode defines the direction of navigation, where true=forward and false=backward
         //console.log('------------------');
         //console.log('i: ' + i + ' / Images length: ' + ull_imagesLength + ' / Mode: ' + mode + ' / Lazyload: ' + lazyLoad);
-
-        if (!mobile)
-            currentThumb = $('.c-photogallery-thumbnails__image--inactive:eq('+instance+')').data('thumbid');
-        //console.log(currentThumb);
-        //console.log('current thumb: ' + currentThumb + ' current i: ' + i);
-
-        if (mode == false && i % thumbAmount == 0 && !mobile) {
-            x -= thumbAmount;
-            setThumbs(x, 'next');
+        
+        // Select the last set of thumbnails (when on the first slide)
+        if(mode == false && !mobile && i == 0 && $('.c-photogallery-thumbnails__image--inactive').attr('data-thumbid') == 0) {
+            
+            // Navigate to the last set of thumbnails
+            var ull_thumbnailSets = Math.round(imagesThumbs.length/thumbAmount)-1;
+            for(var z = 0;z < ull_thumbnailSets;z++)
+                $(nextThumbs).click();
+            
+            // click last thumbnail
+            setTimeout(function () {
+                $('.c-photogallery-thumbnails__image[data-thumbid='+ull_thumbnailLength+']').click();
+            }, 60);
         }
+        else {
 
-        // Increment counter, since the next image was selected
-        // Increment only when the current image is not the last image
-        if (i < ull_imagesLength && mode == true)
-            i++;
-        // Decrement counter, since the previous image was selected
-        if (i != 0 && mode == false)
-            i--;
+            if (!mobile)
+                currentThumb = $('.c-photogallery-thumbnails__image--inactive:eq('+instance+')').data('thumbid');
+            //console.log(currentThumb);
+            //console.log('current thumb: ' + currentThumb + ' current i: ' + i);
 
-        // The end of the gallery is reached
-        if (i == ull_imagesLength) {
-            console.log('The end of the gallery is reached');
-
-            // Stop lazyloading, as all images in the images array have been loaded
-            lazyLoad = false;
-
-            // reset i
-            i = 0;
-
-            if (!mobile) {
-                // reset x and thumbnailset
-                x = 0;
+            // Choosing the previous set of thumbnails
+            //console.log(i % thumbAmount);
+            if (mode == false && i % thumbAmount == 0 && !mobile) {
+                x -= thumbAmount;
                 setThumbs(x, 'next');
-
-                // Set the active Thumbnail
-                activeThumb(i);
             }
 
-            // Reset UI index-counter
-            setIndex(i);
+            // Increment counter, since the next image was selected
+            // Increment only when the current image is not the last image
+            if (i < ull_imagesLength && mode == true)
+                i++;
+            // Decrement counter, since the previous image was selected
+            if (i != 0 && mode == false)
+                i--;
 
-            // Stop the whole function
-            return [i, lazyLoad];
-        }
+            // The end of the gallery is reached
+            if (i == ull_imagesLength) {
+                console.log('The end of the gallery is reached');
 
-        //console.log('i before:'+i);
-        //console.log(mode);
+                // Stop lazyloading, as all images in the images array have been loaded
+                lazyLoad = false;
 
-        // Set active thumbnail
-        if (!mobile)
-            activeThumb(i);
+                // reset i
+                i = 0;
 
-        // Initially there are two images per gallery preloaded in the DOM (after domready) and one is lazyloaded every interaction that leads one step further in the gallery - example: image1(preloaded & visible), image2(preloaded) -> when image1 continues to image2 through user interaction -> image3(LazyLoaded through this JS-File) -> when image2 continues to image3 through user interaction -> image4(LazyLoaded through this JS-File)
-        if (i != ull_imagesLength - 1 && lazyLoad == true && mode == true) {
-            if (i + 1 == $('.unslider-wrap:eq('+instance+')').children().length) {
-                
-                if(ull_imagesType == 'multidimensional-array') {
+                if (!mobile) {
+                    // reset x and thumbnailset
+                    x = 0;
+                    setThumbs(x, 'next');
 
-                    var imgid = parseInt($('.unslider-wrap:eq('+instance+')').children().length)+1;
-                    
-                    // discarded single img (or picture element) with srcset as unslider isn't compatible (.unslider-wrap's width messes with the way the browser interprets the viewport resolution and tricks it into always choosing the highest available res)
-                    // ...thus, this solution was chosen:
-                    
-                    // Check viewport width and dynamically load the correct image resolution (if provided)
-                    for (var z = 0; z < ull_imagesSrcsets && ull_break == false; z++) {
-                        if($(window).width() >= images[z][0]) {
-                            //console.log(images[z][0]);
-                            $('#'+sliderID +' .unslider-wrap').append('<li><img src="' +images[z][1][i+1] +'" alt="' +alt[i+1] +'" title="' +description[i+1] +'" data-imgid="'+imgid +'"></li>');
-                            // stop the for loop when the right resolution was found
-                            ull_break = true;
+                    // Set the active Thumbnail
+                    activeThumb(i);
+                }
+
+                // Reset UI index-counter
+                setIndex(i);
+
+                // Stop the whole function
+                return [i, lazyLoad];
+            }
+
+            //console.log('i before:'+i);
+            //console.log(mode);
+
+            // Set active thumbnail
+            if (!mobile)
+                activeThumb(i);
+
+            // Initially there are two images per gallery preloaded in the DOM (after domready) and one additional is lazyloaded for every interaction that leads one step further in the gallery - example: image1(preloaded & visible), image2(preloaded) -> when image1 continues to image2 through user interaction -> image3(LazyLoaded through this JS-File) -> when image2 continues to image3 through user interaction -> image4(LazyLoaded through this JS-File)
+            if (i != ull_imagesLength - 1 && lazyLoad == true && mode == true) {
+                if (i + 1 == $('.unslider-wrap:eq('+instance+')').children().length) {
+
+                    if(ull_imagesType == 'multidimensional-array') {
+
+                        var imgid = parseInt($('.unslider-wrap:eq('+instance+')').children().length)+1;
+
+                        // discarded single img (or picture element) with srcset as unslider isn't compatible (.unslider-wrap's width messes with the way the browser interprets the viewport resolution and tricks it into always choosing the highest available res)
+                        // ...thus, this solution was chosen:
+
+                        // Check viewport width and dynamically load the correct image resolution (if provided)
+                        for (var z = 0; z < ull_imagesSrcsets && ull_break == false; z++) {
+                            if($(window).width() >= images[z][0]) {
+                                //console.log(images[z][0]);
+                                $('#'+sliderID +' .unslider-wrap').append('<li><img src="' +images[z][1][i+1] +'" alt="' +alt[i+1] +'" title="' +description[i+1] +'" data-imgid="'+imgid +'"></li>');
+                                // stop the for loop when the right resolution was found
+                                ull_break = true;
+                            }
+                            else if(z == ull_imagesSrcsets-1) {
+                                $('#'+sliderID +' .unslider-wrap').append('<li><img src="' +images[z][1][i+1] +'" alt="' +alt[i+0] +'" title="' +description[i+0] +'" data-imgid="'+imgid +'"></li>');
+                            }
                         }
-                        else if(z == ull_imagesSrcsets-1) {
-                            $('#'+sliderID +' .unslider-wrap').append('<li><img src="' +images[z][1][i+1] +'" alt="' +alt[i+0] +'" title="' +description[i+0] +'" data-imgid="'+imgid +'"></li>');
-                        }
+                        ull_break = false;
                     }
-                    ull_break = false;
-                }
-                // when no sourceset is defined
-                else {
-                    // Append Image - Where the magic happens!
-                    $('#'+sliderID +' .unslider-wrap').append('<li><img src="' + images[i+1] + '" alt="' + alt[i+1] + '" title="' + description[i+1] + '"></li>');
-                }
+                    // when no sourceset is defined
+                    else {
+                        // Append Image - Where the magic happens!
+                        $('#'+sliderID +' .unslider-wrap').append('<li><img src="' + images[i+1] + '" alt="' + alt[i+1] + '" title="' + description[i+1] + '"></li>');
+                    }
 
-                // Let's recalculate Unslider so it knows what's going on
-                sliderName.unslider('calculateSlides');
-            } //else
-                //console.log('Image already loaded, no lazyLoad.');
+                    // Let's recalculate Unslider so it knows what's going on
+                    sliderName.unslider('calculateSlides');
+                } //else
+                    //console.log('Image already loaded, no lazyLoad.');
+            }
+            if (i <= ull_imagesLength) {
+                // Switch Caption
+                //caption.text(description[i]);
+                // Set UI Indexvalue
+                setIndex(i);
+            }
+
+            // Switch Thumbnail set when necessary
+            if (!mobile)
+                offset = x + thumbAmount;
+            //offsetBack = x + thumbAmount - 1;
+
+            //console.log('i: ' +i);
+
+            if (i % offset == 0 && i != 0 && mode == true && !mobile) {
+                x += thumbAmount;
+                setThumbs(x, 'next');
+            }
+
         }
-        if (i <= ull_imagesLength) {
-            // Switch Caption
-            //caption.text(description[i]);
-            // Set UI Indexvalue
-            setIndex(i);
-        }
-
-        // Switch Thumbnail set when necessary
-        if (!mobile)
-            offset = x + thumbAmount;
-        //offsetBack = x + thumbAmount - 1;
-
-        //console.log('i: ' +i);
-
-        if (i % offset == 0 && i != 0 && mode == true && !mobile) {
-            x += thumbAmount;
-            setThumbs(x, 'next');
-        }
-
-        //console.log('i: '+i +' / Images length: ' +ull_imagesLength +' / Mode: ' +mode +' / Lazyload: ' +lazyLoad + ' -- end of Function');
-
         // Return i and lazyLoad as an unlabeled array
         return [i, lazyLoad];
     }
@@ -483,7 +522,6 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
         $('.pg_thumbs:eq('+instance+') img[data-thumbid="' + i + '"]').addClass('c-photogallery-thumbnails__image--inactive').parent().append('<span class="c-photogallery-teaser-image-infos__image-number__wrapper"><span class="c-photogallery-teaser-image-infos__image-number pg_index">1</span><span class="c-photogallery-teaser-image-infos__count pg_sum"> /'+ull_imagesLength+'</span></span>');
         index = $('.pg_index:eq('+instance+')');
     }
-
 
     // SUPPORT FOR SWIPEGESTURES ----------------------
 
@@ -534,17 +572,16 @@ function unsliderlazyload__interaction(images, description, alt, instance, slide
 
     //  ---------------------
 
-
     // Hide 'previous' when at the first slide (prevents lazyloading all images at once)
     function hidePreviousButton() {
         //console.log(i);
         //console.log(lazyLoad);
-        if(lazyLoad) {
+        if(lazyLoad)
             if (i == 0)
                 previous.hide();
             else
                 previous.show();
-        }
+        //previous.show();
     }
 
     function hidePreviousThumbsButton(x) {
